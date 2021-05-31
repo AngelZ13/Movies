@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.0.0.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Director</th>
+                    <th>Actors</th>
+                    <th>Genres</th>
+                </tr>
+            </thead>
+            <tbody id="soma">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function Movie(title, director, actors, genres) {
+            this.title = title;
+            this.director = director;
+            this.actors = actors;
+            this.genres = genres;
+        }
+
+        function Director(firstname, lastname) {
+            this.firstname = firstname;
+            this.lastname = lastname;
+        }
+
+        function Actor(firstname, lastname) {
+            this.firstname = firstname;
+            this.lastname = lastname;
+        }
+
+        function Genre(kind) {
+            this.kind = kind;
+        }
+
+        var d1 = new Director("James", "Cameron");
+        var d2 = new Director("David", "Lynch");
+        var d3 = new Director("David", "Fincher");
+
+        var a1 = new Actor("Leonardo", "Di Caprio");
+        var a2 = new Actor("Kate", "Winslet");
+        var a3 = new Actor("Brad", "Pitt");
+        var a4 = new Actor("Morgan", "Freeman");
+
+        var g1 = new Genre("mystery");
+        var g2 = new Genre("comedy");
+        var g3 = new Genre("drama");
+        var g4 = new Genre("action");
+        var g4 = new Genre("crime");
+
+        var m1 = new Movie("Titanic", d1, [a1, a2], [g3]);
+        var m2 = new Movie("Seven", d3, [a3, a4], [g3, g4]);
+        var m3 = new Movie("Fight Club", d3, [a3], [g3, g1]);
+
+        var movies = [m1, m2, m3];
+
+        movies.forEach(Output);
+
+        function Output(movie) {
+            var template = `
+                                <tr>
+                                    <td>${movie.title}</td>
+                                    <td>${movie.director.firstname} ${movie.director.lastname}</td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            ${ShowActors(movie)}
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            ${movie.genres.map(x => `<li>${x.kind}</li>`).join(" ")}
+                                        </ul>
+                                    </td>
+                                </tr>
+
+         
+                  
+                            `
+            $("#soma").append(template)
+        }
+
+        
+        function ShowActors(movie) {
+            var template = "";
+            for (var actor of movie.actors) {
+                template += `
+                                <li>${actor.firstname} ${actor.lastname}</li>
+                            `
+            }
+            return template;
+        }
+
+
+
+    </script>
+
+
+
+</body>
+</html>
